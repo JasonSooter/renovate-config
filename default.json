@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate preset for JasonSooter repos. Extend with: { \"extends\": [\"local>JasonSooter/renovate-config\"] }",
+  "extends": ["config:recommended", ":semanticCommits", "schedule:weekly"],
+  "timezone": "Europe/Berlin",
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "description": "Security fixes skip the weekly schedule. OSV (above) covers direct dependencies only; this reads the repo's Dependabot alerts, which cover transitive ones too. Dependabot alerts are on; its security and version updates are off.",
+    "labels": ["security"]
+  },
+  "lockFileMaintenance": {
+    "description": "Weekly lockfile refresh, so transitive dependencies with open ranges pick up patches without waiting on a direct bump.",
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "One weekly PR for every non-major update; majors stay separate so each gets its own review.",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "non-major dependencies",
+      "groupSlug": "all-non-major"
+    }
+  ]
+}
