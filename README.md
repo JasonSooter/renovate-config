@@ -12,8 +12,19 @@ In a repo, `renovate.json`:
 ```
 
 What it sets: weekly schedule (Europe/Berlin), semantic commits, one grouped
-PR for minor and patch updates, weekly lockfile maintenance, and security PRs
-outside the schedule.
+PR for minor, patch and digest updates, weekly lockfile maintenance, and
+security PRs outside the schedule.
+
+Supply-chain pinning:
+
+- **GitHub Actions are pinned to a full commit SHA** with the version in a
+  trailing comment (`helpers:pinGitHubActionDigests`). A tag like `@v5` can be
+  moved to different code; a SHA cannot.
+- **Dockerfile images are pinned by digest** (`FROM image:tag@sha256:…`), so a
+  rebuild cannot silently pull different layers.
+
+Repo-specific policy stays in each repo's own `renovate.json`: automerge,
+labels, and version holds such as keeping a base image on one Python.
 
 Security works in tandem with GitHub:
 
